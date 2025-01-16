@@ -1,28 +1,8 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 
-//Database
-import db from "./_db.js";
-
 // Types
-import { typeDefs } from "./schema.js";
-
-const resolvers = {
-    Query: {
-        reviews: () => db.reviews,
-        review: (_, args, context, info) => {
-            return db.reviews.find(review => review.id === args.id);
-        },
-        games: () => db.games,
-        game: (_, args, context, info) => {
-            return db.games.find(game => game.id === args.id);
-        },
-        authors: () => db.authors,
-        author: (_, args, context, info) => {
-            return db.authors.find(author => author.id === args.id);
-        },
-    },
-}
+import { typeDefs, resolvers } from "./schema.js";
 
 //Server setup
 const server = new ApolloServer({
