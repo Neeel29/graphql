@@ -32,10 +32,15 @@ export const typeDefs = `#graphql
     type Mutation {
         deleteGame(id: ID!): [Game]
         addGame(game: AddGameInput): Game
+        updateGame(id: ID!, edits:EditsGameInput ): [Game]
     }
     input AddGameInput {
         title: String!
         platform: [String!]!
+    }
+    input EditsGameInput {
+        title: String
+        platform: [String!]
     }
 `
 
@@ -67,6 +72,15 @@ export const resolvers = {
             let game = {...args.game, id: String(db.games.length + 1)}
             db.games.push(game)
             return game
+        },
+        updateGame: (_, args) => {
+            db.games = db.games.map(game => {
+                if (game.id === args.id) {
+                    return {...game, ...args.edits}
+                }
+                return game
+            })
+            return db.games.find(game => game.id === args.id)
         }
     }
 }
