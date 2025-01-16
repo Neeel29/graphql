@@ -10,8 +10,6 @@ const server = new ApolloServer({
     typeDefs,
     // Resolvers -- functions that return data for each type
     resolvers
-
-    
 })
 
 const { url } = await startStandaloneServer(server, {
